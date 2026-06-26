@@ -12,9 +12,9 @@ const team_1 = require("./models/team");
 const user_1 = require("./models/user");
 const workout_1 = require("./models/workout");
 const app = (0, express_1.default)();
-const PORT = Number(process.env.PORT) || 8000;
+const PORT = Number(process.env.PORT || '8000');
 const getApiBaseUrl = () => {
-    const codespaceName = process.env.CODESPACE_NAME;
+    const codespaceName = process.env.CODESPACE_NAME?.trim();
     return codespaceName
         ? `https://${codespaceName}-8000.app.github.dev`
         : 'http://localhost:8000';
@@ -75,7 +75,7 @@ async function startServer() {
     catch (error) {
         console.warn('MongoDB connection unavailable, continuing with in-memory routes:', error);
     }
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
         console.log(`Octofit backend listening on port ${PORT}`);
         console.log(`API base URL: ${getApiBaseUrl()}`);
     });
